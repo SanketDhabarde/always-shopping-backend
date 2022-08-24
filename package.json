@@ -1,0 +1,22 @@
+{
+  "name": "always-shopping-backend",
+  "version": "1.0.0",
+  "description": "always-shopping e-commerce app backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SanketDhabarde/always-shopping-backend.git"
+  },
+  "author": "Sanket Dhabarde",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SanketDhabarde/always-shopping-backend/issues"
+  },
+  "homepage": "https://github.com/SanketDhabarde/always-shopping-backend#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
