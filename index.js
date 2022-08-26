@@ -1,10 +1,16 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 require("dotenv").config();
-const app = express();
-const port = 3000;
 const { initializeDbConnection } = require("./db/db.connect");
+const routes = require("./routers");
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 initializeDbConnection();
+
+app.use(bodyParser.json());
+app.use("/api", routes);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
