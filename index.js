@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const { initializeDbConnection } = require("./db/db.connect");
-const routes = require("./routers");
+const routes = require("./routes");
 
 const app = express();
 const port = process.env.PORT || 3000;
