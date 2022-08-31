@@ -64,7 +64,43 @@ const removeItemFromCartHandler = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      error: "Something went wrong. Couldn't add product to the cart",
+      error: "Something went wrong. Couldn't remove product from the cart",
+    });
+  }
+};
+
+const updateCartItemHandler = async (req, res) => {
+  const { userId } = req.user;
+  const { productId } = req.params;
+  try {
+    const foundUser = await User.findById(userId);
+    let userCart = foundUser.cart;
+
+    const { action } = req.body;
+
+    if (action === "increment") {
+      userCart.forEach((product) => {
+        if (product._id == productId) {
+          product.quantity += 1;
+          product.updatedAt = formatDate();
+        }
+      });
+    } else if (action === "decrement") {
+      userCart.forEach((product) => {
+        if (product._id == productId && product.quantity > 1) {
+          product.quantity -= 1;
+          product.updatedAt = formatDate();
+        }
+      });
+    }
+
+    await User.findByIdAndUpdate(userId, { cart: userCart });
+
+    res.status(200).json({ cart: userCart });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Something went wrong. Couldn't update product in the cart",
     });
   }
 };
@@ -72,5 +108,6 @@ const removeItemFromCartHandler = async (req, res) => {
 module.exports = {
   getCartItemsHandler,
   addItemToCartHandler,
+  updateCartItemHandler,
   removeItemFromCartHandler,
 };
