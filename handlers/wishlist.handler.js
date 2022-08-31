@@ -49,4 +49,28 @@ const addItemToWishlistHandler = async (req, res) => {
   }
 };
 
-module.exports = { getWishlistItemsHandler, addItemToWishlistHandler };
+const removeItemFromWishlistHandler = async (req, res) => {
+  const { userId } = req.user;
+  try {
+    const foundUser = await User.findById(userId);
+    let userWishlist = foundUser.wishlist;
+
+    const { productId } = req.params;
+    userWishlist = userWishlist.filter((product) => product._id != productId);
+
+    await User.findByIdAndUpdate(userId, { wishlist: userWishlist });
+
+    res.status(200).json({ wishlist: userWishlist });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Something went wrong. Couldn't remove item from the wishlist",
+    });
+  }
+};
+
+module.exports = {
+  getWishlistItemsHandler,
+  addItemToWishlistHandler,
+  removeItemFromWishlistHandler,
+};
